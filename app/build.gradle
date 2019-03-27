@@ -11,7 +11,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.star.starpda"
+        applicationId "com.star"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
