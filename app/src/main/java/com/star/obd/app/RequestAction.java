@@ -218,7 +218,7 @@ public class RequestAction extends SuperActivity  implements
                 showDialog(BLUETOOTH_DISABLED);
             }
         }
-
+ 
         /*
          * 方位传感器
          */
