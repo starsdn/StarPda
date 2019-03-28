@@ -218,7 +218,7 @@ public class RequestAction extends SuperActivity  implements
                 showDialog(BLUETOOTH_DISABLED);
             }
         }
- 
+
         /*
          * 方位传感器
          */
@@ -404,7 +404,7 @@ public class RequestAction extends SuperActivity  implements
             localIntent.putExtra("obd_clsbdh",strObdVin); //OBD 读取到的车辆识别代号
             localIntent.putExtra("obd_sjy",strobd_sjy);//OBD 读取到的 16位原始码
             localIntent.putExtra("keystr",strKystr);
-            setResult(-1, localIntent);
+            setResult(RESULT_OK, localIntent);
             finish();
             return;
 
@@ -416,7 +416,7 @@ public class RequestAction extends SuperActivity  implements
             localIntent.putExtra("obd_clsbdh",strObdVin); //OBD 读取到的车辆识别代号
             localIntent.putExtra("obd_sjy",strobd_sjy);//OBD 读取到的 16位原始码
             localIntent.putExtra("keystr",strKystr);
-            setResult(-1, localIntent);
+            setResult(RESULT_CANCELED, localIntent);
             finish();
             return;
 
