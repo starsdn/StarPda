@@ -12,8 +12,8 @@ import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.LocationManager;
+//import android.hardware.SensorManager;
+/*import android.location.LocationManager;*/
 import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -106,7 +106,7 @@ public class RequestAction extends SuperActivity  implements
     static final int TABLE_ROW_MARGIN = 7; //显示内容表格margin
     static final int NO_ORIENTATION_SENSOR = 8;
 
-    private SensorManager sensorManager = null;
+  //  private SensorManager sensorManager = null;
     private Sensor orientSensor = null;
     private PowerManager powerManager = null;
     private PowerManager.WakeLock wakeLock = null;
@@ -200,10 +200,10 @@ public class RequestAction extends SuperActivity  implements
         /*
          * GPS服务
          */
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+       /* LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.getProvider(LocationManager.GPS_PROVIDER) == null) {
             showDialog(NO_GPS_ID);
-        }
+        }*/
 
         /*
          * 验证蓝牙是否存在
@@ -222,13 +222,13 @@ public class RequestAction extends SuperActivity  implements
         /*
          * 方位传感器
          */
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+      /*  sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sens = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
         if (sens.size() <= 0) {
             showDialog(NO_ORIENTATION_SENSOR);
         } else {
             orientSensor = sens.get(0);
-        }
+        }*/
 
         // APP 正常运行必须服务
         if (preRequisites) {
@@ -359,7 +359,7 @@ public class RequestAction extends SuperActivity  implements
     protected void onResume() {
         super.onResume();
 
-        sensorManager.registerListener(orientListener, orientSensor,SensorManager.SENSOR_DELAY_UI);
+      //  sensorManager.registerListener(orientListener, orientSensor,SensorManager.SENSOR_DELAY_UI);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(SCREEN_DIM_WAKE_LOCK,"ObdReader");

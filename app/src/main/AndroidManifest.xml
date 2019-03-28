@@ -2,26 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.star">
     <!-- 屏幕旋转权限 -->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
+   <!-- <uses-permission android:name="android.permission.CAMERA" />-->
+
+     <!-- 在sdcard中创建/删除文件的权限 -->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+  <!--  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> --> <!--往sdcard中写入数据的权限 -->
+   <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+   <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+  <!--  <uses-feature android:name="android.hardware.camera" />-->
+    <!--<uses-feature android:name="android.hardware.camera.autofocus" />--> <!--开启闪光灯权限 -->
+   <!-- <uses-permission android:name="android.permission.FLASHLIGHT" />-->
+
+    <!-- 震动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+  <!--  键盘输入-->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- 下载-->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+   <!-- 信息通知栏-->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+   <!-- 网络访问-->
     <uses-permission android:name="android.permission.INTERNET" />
-   <!-- <uses-permission android:name="android.permission.VIBRATE" />--> <!-- 在sdcard中创建/删除文件的权限 -->
-    <!--<uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />-->
-    <!--<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />-->
-    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
-<!--    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+   <!-- 允许应用程序访问额外的位置提供命令-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> &lt;!&ndash; 往sdcard中写入数据的权限 &ndash;&gt;
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" /> &lt;!&ndash; 开启闪光灯权限 &ndash;&gt;
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--后台唤醒-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+   <!-- 读写存储-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
