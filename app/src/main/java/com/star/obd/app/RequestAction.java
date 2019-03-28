@@ -55,13 +55,13 @@ import java.util.List;
 
 import static android.os.PowerManager.SCREEN_DIM_WAKE_LOCK;
 
-public class RequestAction extends SuperActivity  implements
-        View.OnClickListener{
+public class RequestAction extends SuperActivity implements
+        View.OnClickListener {
 
     Button btnStartOBD;//连接OBD
     Button btnRead;//读取OBD信息
     Button btnAddBlack;//添加黑名单数据
-    Button  btnNext;  //继续按钮
+    Button btnNext;  //继续按钮
     Button btnCancle;//返回按钮
     Button btnPerson; //人工审核
     Button btnPass;//人工审核  通过
@@ -75,18 +75,18 @@ public class RequestAction extends SuperActivity  implements
 
     EditText editBlackMark;//加入黑名单备注
 
-    String strCLSBDH=""; //车辆识别代号
-    String strObdVin=""; //OBD
-    String strCYLSH="";//业务流水号
-    String strKystr ="";//加密串
+    String strCLSBDH = ""; //车辆识别代号
+    String strObdVin = ""; //OBD
+    String strCYLSH = "";//业务流水号
+    String strKystr = "";//加密串
     String strclxh = "";//车辆型号
-    String strCLPP1 ="";//中文车辆品牌
-    String strCLPP2 ="";//英文车辆品牌
+    String strCLPP1 = "";//中文车辆品牌
+    String strCLPP2 = "";//英文车辆品牌
     String strRLZL = "";//燃料种类
-    String strCLLX ="";//车辆类型
-    String strobd_sjy ="";//OBD读取到的数据源，未解码的16进制代码
-    int sdnissame=2;  //obd读取vin和查验车辆信息vin比对   0:不一致 1:一致 2:未知
-    int iDeptype=0;  //0:4S店  1:苏州车管所  2:县市车管所
+    String strCLLX = "";//车辆类型
+    String strobd_sjy = "";//OBD读取到的数据源，未解码的16进制代码
+    int sdnissame = 2;  //obd读取vin和查验车辆信息vin比对   0:不一致 1:一致 2:未知
+    int iDeptype = 0;  //0:4S店  1:苏州车管所  2:县市车管所
 
 
     private int speed = 1;
@@ -106,7 +106,7 @@ public class RequestAction extends SuperActivity  implements
     static final int TABLE_ROW_MARGIN = 7; //显示内容表格margin
     static final int NO_ORIENTATION_SENSOR = 8;
 
-  //  private SensorManager sensorManager = null;
+    //  private SensorManager sensorManager = null;
     private Sensor orientSensor = null;
     private PowerManager powerManager = null;
     private PowerManager.WakeLock wakeLock = null;
@@ -132,23 +132,23 @@ public class RequestAction extends SuperActivity  implements
     /**
      * 初始化控件
      */
-    @SuppressWarnings({ "deprecation", "deprecation" })
-    private void InitControl(){
+    @SuppressWarnings({"deprecation", "deprecation"})
+    private void InitControl() {
 
-        btnStartOBD =(Button)findViewById(R.id.sdnStarObd);//开始连接OBD
-        btnRead = (Button)findViewById(R.id.sdnbtnRead);
-        btnNext = (Button)findViewById(R.id.btnNext);
-        btnAddBlack =(Button)findViewById(R.id.sdnaddblack);
-        btnCancle = (Button)findViewById(R.id.btnCancle);
-        btnPerson = (Button)findViewById(R.id.btnPerson);
-        btnPass = (Button)findViewById(R.id.btnPass);
-        btnNoPass = (Button)findViewById(R.id.btnNoPass);//人工审核 不通过
-        lineEdit  = (LinearLayout)findViewById(R.id.layout40);  //编辑原因列
-        lineButton = (LinearLayout)findViewById(R.id.layout50);//按钮列表
-        txtCLSBDH = (TextView)findViewById(R.id.txtCLSBDH);//车辆识别代号
-        txtOBDVin = (TextView)findViewById(R.id.txtOBD);  //OBDz
-        txtIsSame = (TextView)findViewById(R.id.txtsame);//
-        editContent = (EditText)findViewById(R.id.txtCONTENT);
+        btnStartOBD = (Button) findViewById(R.id.sdnStarObd);//开始连接OBD
+        btnRead = (Button) findViewById(R.id.sdnbtnRead);
+        btnNext = (Button) findViewById(R.id.btnNext);
+        btnAddBlack = (Button) findViewById(R.id.sdnaddblack);
+        btnCancle = (Button) findViewById(R.id.btnCancle);
+        btnPerson = (Button) findViewById(R.id.btnPerson);
+        btnPass = (Button) findViewById(R.id.btnPass);
+        btnNoPass = (Button) findViewById(R.id.btnNoPass);//人工审核 不通过
+        lineEdit = (LinearLayout) findViewById(R.id.layout40);  //编辑原因列
+        lineButton = (LinearLayout) findViewById(R.id.layout50);//按钮列表
+        txtCLSBDH = (TextView) findViewById(R.id.txtCLSBDH);//车辆识别代号
+        txtOBDVin = (TextView) findViewById(R.id.txtOBD);  //OBDz
+        txtIsSame = (TextView) findViewById(R.id.txtsame);//
+        editContent = (EditText) findViewById(R.id.txtCONTENT);
 
         btnRead.setOnClickListener(this);
         btnNext.setOnClickListener(this);
@@ -172,7 +172,6 @@ public class RequestAction extends SuperActivity  implements
 
         txtCLSBDH.setText(strCLSBDH);
         txtCLSBDH.setTextColor(Color.BLUE);
-
 
 
         mListener = new IPostListener() {
@@ -214,8 +213,17 @@ public class RequestAction extends SuperActivity  implements
 
         } else {
             if (!mBtAdapter.isEnabled()) {
-                preRequisites = false;
-                showDialog(BLUETOOTH_DISABLED);
+
+                boolean blStar= mBtAdapter.enable(); //启用蓝牙
+                showToast("自动开启蓝牙中……");
+                if (!blStar) {
+                    showToast("自动蓝牙开启失败");
+                    preRequisites = false;
+                    showDialog(BLUETOOTH_DISABLED);
+                }else {
+                    showToast("自动蓝牙开启成功");
+                }
+
             }
         }
 
@@ -241,7 +249,7 @@ public class RequestAction extends SuperActivity  implements
             mServiceConnection.setServiceListener(mListener);
 
             // 绑定服务
-            if(bindService(mServiceIntent, mServiceConnection,Context.BIND_AUTO_CREATE))//;
+            if (bindService(mServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE))//;
             {
                 showToast("蓝牙服务绑定成功！");
             }
@@ -252,11 +260,10 @@ public class RequestAction extends SuperActivity  implements
     /*
      * 显示信息
      */
-    private void ShowMsg(String strMsg)
-    {
+    private void ShowMsg(String strMsg) {
         new AlertDialog.Builder(this)
                 .setTitle("退出")
-                .setMessage(strMsg+"是否退出检验？")
+                .setMessage(strMsg + "是否退出检验？")
                 .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             public void onClick(
@@ -282,8 +289,8 @@ public class RequestAction extends SuperActivity  implements
     /*
      * 初始化UI界面
      */
-    private void InitUI(int iParam){
-        switch(iParam){
+    private void InitUI(int iParam) {
+        switch (iParam) {
             case 0://不合格
                 //    btnNext.setVisibility(View.GONE);//继续按钮不可用
                 //   lineEdit.setVisibility(View.GONE); //编辑列布可见
@@ -306,11 +313,11 @@ public class RequestAction extends SuperActivity  implements
     }
 
     private void releaseWakeLockIfHeld() {
-        try{
+        try {
             if (wakeLock.isHeld()) {
                 wakeLock.release();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -359,10 +366,10 @@ public class RequestAction extends SuperActivity  implements
     protected void onResume() {
         super.onResume();
 
-      //  sensorManager.registerListener(orientListener, orientSensor,SensorManager.SENSOR_DELAY_UI);
+        //  sensorManager.registerListener(orientListener, orientSensor,SensorManager.SENSOR_DELAY_UI);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(SCREEN_DIM_WAKE_LOCK,"ObdReader");
+        wakeLock = powerManager.newWakeLock(SCREEN_DIM_WAKE_LOCK, "ObdReader");
     }
 
     @Override
@@ -387,46 +394,46 @@ public class RequestAction extends SuperActivity  implements
     protected void onPause() {
         super.onPause();
 
-        try{
+        try {
             releaseWakeLockIfHeld();
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     @Override
     public void onClick(View v) {
-        if(v==btnNext){ //继续
+        if (v == btnNext) { //继续
             stopLiveData();
             Intent localIntent = new Intent();
             localIntent.putExtra("cylsh", strCYLSH); //继续
             localIntent.putExtra("clsbdh", strCLSBDH);
-            localIntent.putExtra("obd_clsbdh",strObdVin); //OBD 读取到的车辆识别代号
-            localIntent.putExtra("obd_sjy",strobd_sjy);//OBD 读取到的 16位原始码
-            localIntent.putExtra("keystr",strKystr);
+            localIntent.putExtra("obd_clsbdh", strObdVin); //OBD 读取到的车辆识别代号
+            localIntent.putExtra("obd_sjy", strobd_sjy);//OBD 读取到的 16位原始码
+            localIntent.putExtra("keystr", strKystr);
             setResult(RESULT_OK, localIntent);
             finish();
             return;
 
-        }else if(v==btnCancle){ //返回
+        } else if (v == btnCancle) { //返回
             stopLiveData();
             Intent localIntent = new Intent();
             localIntent.putExtra("cylsh", strCYLSH); //继续
             localIntent.putExtra("clsbdh", strCLSBDH);
-            localIntent.putExtra("obd_clsbdh",strObdVin); //OBD 读取到的车辆识别代号
-            localIntent.putExtra("obd_sjy",strobd_sjy);//OBD 读取到的 16位原始码
-            localIntent.putExtra("keystr",strKystr);
+            localIntent.putExtra("obd_clsbdh", strObdVin); //OBD 读取到的车辆识别代号
+            localIntent.putExtra("obd_sjy", strobd_sjy);//OBD 读取到的 16位原始码
+            localIntent.putExtra("keystr", strKystr);
             setResult(RESULT_CANCELED, localIntent);
             finish();
             return;
 
-        }else if(v==btnPerson){ //人工审核
+        } else if (v == btnPerson) { //人工审核
             InitUI(2);
             //stopLiveData();
             return;
-        }else if(v==btnPass){ //人工审核 合格
+        } else if (v == btnPass) { //人工审核 合格
             String strContent = editContent.getText().toString();
-            if(strContent.equals(null) || strContent.equals("")){
+            if (strContent.equals(null) || strContent.equals("")) {
                 //不能为空或null
 
                 //editContent.setText("原因不能为空！");
@@ -442,9 +449,9 @@ public class RequestAction extends SuperActivity  implements
             setResult(-1, localIntent);
             finish();
             return;
-        }else if(v==btnNoPass){//人工审核  不合格
+        } else if (v == btnNoPass) {//人工审核  不合格
             String strContent = editContent.getText().toString();
-            if(strContent.equals(null) || strContent.equals("")){
+            if (strContent.equals(null) || strContent.equals("")) {
                 //不能为空或null
 
                 //editContent.setText("原因不能为空！");
@@ -460,7 +467,7 @@ public class RequestAction extends SuperActivity  implements
             setResult(-1, localIntent);
             finish();
             return;
-        } else if(v==btnAddBlack){  //添加黑名单
+        } else if (v == btnAddBlack) {  //添加黑名单
             /*
             View vAddBlack = getLayoutInflater().inflate(R.layout.activity_add_black,null);
             editBlackMark = (EditText)vAddBlack.findViewById(R.id.sdnblacemark);
@@ -483,11 +490,10 @@ public class RequestAction extends SuperActivity  implements
                     .setNegativeButton("取消", null).show();
                     */
             updateConfig();//打开配置按钮
-        }else  if(v==btnStartOBD){ //开始连接OBD
+        } else if (v == btnStartOBD) { //开始连接OBD
             startLiveData();
             return;
-        }
-        else if(v==btnRead){  //读取OBD数据 并分析VIN吗
+        } else if (v == btnRead) {  //读取OBD数据 并分析VIN吗
 
             //startLiveData(); //先连接 OBD
             //LZWACAGA597057988
@@ -498,14 +504,14 @@ public class RequestAction extends SuperActivity  implements
             //2、发送读取车辆基本信息指令 读取车辆基本信息
 
             //3、读取并解析车辆基本信息
-            if(mServiceConnection==null && !mServiceConnection.isRunning()){
+            if (mServiceConnection == null && !mServiceConnection.isRunning()) {
                 showToast("服务未连接！！！");
                 return;
             }
 
-            try{
+            try {
 
-                final SdnCommand command=new SdnCommand("0902"); //获取车辆识别代号
+                final SdnCommand command = new SdnCommand("0902"); //获取车辆识别代号
                 mServiceConnection.addJobToQueue(new ObdCommandJob(command));
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -514,9 +520,9 @@ public class RequestAction extends SuperActivity  implements
                         String strResult = command.getResult().toUpperCase(); //强制转换成大写 2017年8月1日13:40:26 shandinan
                         showToast(strResult);
                         strobd_sjy = strResult;//把未解码的16进制 OBD代码存放在全局变量中
-                        try{
-                            showToast("车辆识别代码原始码长度："+strResult.length());
-                            if(strResult.length()==48&&strResult !=null &&!strResult.equals("")&&!strResult.equals("NODATA")){ //strResult 不为空和null
+                        try {
+                            showToast("车辆识别代码原始码长度：" + strResult.length());
+                            if (strResult.length() == 48 && strResult != null && !strResult.equals("") && !strResult.equals("NODATA")) { //strResult 不为空和null
                                 strResult = strResult.trim().replace("0:", ""); //去除结果集字符串中的空格
                                 String strASC2Vin = strResult.replace("\r1:", "").replace("\r2:", "");
                                 txtOBDVin.setText(asciiToString(strASC2Vin));
@@ -524,23 +530,21 @@ public class RequestAction extends SuperActivity  implements
                                 // }else{
                                 //  txtOBDVin.setText("获取vin失败");
                                 //}
-                            }else if(strResult.length()==52&&strResult !=null &&!strResult.equals("")&&!strResult.equals("NODATA")){
+                            } else if (strResult.length() == 52 && strResult != null && !strResult.equals("") && !strResult.equals("NODATA")) {
                                 strResult = strResult.trim().replace("014\r0:", ""); //去除结果集字符串中的空格
                                 String strASC2Vin = strResult.replace("\r1:", "").replace("\r2:", "");
                                 txtOBDVin.setText(asciiToString(strASC2Vin));
                                 strObdVin = asciiToString(strASC2Vin);
-                            }else if(strResult.length()==59&&strResult !=null &&!strResult.equals("")&&!strResult.equals("NODATA"))
-                            {
+                            } else if (strResult.length() == 59 && strResult != null && !strResult.equals("") && !strResult.equals("NODATA")) {
                                 strResult = strResult.trim().replace("7F0922\r", "").replace("014\r0:", ""); //去除结果集字符串中的空格
                                 String strASC2Vin = strResult.replace("\r1:", "").replace("\r2:", "");
                                 txtOBDVin.setText(asciiToString(strASC2Vin));
                                 strObdVin = asciiToString(strASC2Vin);
-                            }
-                            else{
+                            } else {
                                 //  txtOBDVin.setText("获取vin为空");
                                 strResult = strResult.trim().replace(" ", "").replace("\r", "");
                                 // showToast("车辆识别代码原始码长度："+strResult.length());
-                                if(strResult.length()==76){ //大众车 车辆识别代号
+                                if (strResult.length() == 76) { //大众车 车辆识别代号
                                     String strASC2Vin = strResult.replace("490202", "").replace("490203", "")
                                             .replace("490204", "").replace("490205", "").replace("7F0912", "")
                                             .replace("000000", "");
@@ -548,7 +552,7 @@ public class RequestAction extends SuperActivity  implements
                                     txtOBDVin.setText(asciiToString(strASC2Vin));
                                     showToast(asciiToString(strASC2Vin));
                                     strObdVin = asciiToString(strASC2Vin);
-                                }else if(strResult.length()==70){
+                                } else if (strResult.length() == 70) {
                                     String strASC2Vin = strResult.replace("490202", "").replace("490203", "")
                                             .replace("490204", "").replace("490205", "")
                                             .replace("000000", "");
@@ -560,36 +564,35 @@ public class RequestAction extends SuperActivity  implements
 
                             }
                             SPUtils.saveString(RequestAction.this, "obd_readdata", strObdVin);
-                        }catch(Exception ex){
+                        } catch (Exception ex) {
                             txtOBDVin.setText("获取vin失败,请重新获取");
                         }
 
                         txtOBDVin.setTextColor(Color.BLUE);
 
 
-                        if(strCLSBDH.equals(strObdVin)){ //如果车辆识别代号和OBD读取到的一致
-                            sdnissame =1;
+                        if (strCLSBDH.equals(strObdVin)) { //如果车辆识别代号和OBD读取到的一致
+                            sdnissame = 1;
                             txtIsSame.setText("一致");
                             // isSame =1;
                             txtIsSame.setTextColor(Color.GREEN); //一直背景为绿色
                             InitUI(1);//设置为合格
-                        }else if(!strObdVin.equals("")){
-                            sdnissame =0;
+                        } else if (!strObdVin.equals("")) {
+                            sdnissame = 0;
                             txtIsSame.setText("不一致");
                             txtIsSame.setTextColor(Color.RED); //一直背景为绿色
                             InitUI(0);//设置为合格
-                        }
-                        else{
-                            sdnissame =2;
+                        } else {
+                            sdnissame = 2;
                             txtIsSame.setText("未知");
                             txtIsSame.setTextColor(Color.YELLOW); //一直背景为绿色
                             InitUI(2);//设置为未知
                         }
                     }
-                },2000);
+                }, 2000);
 
 
-            }catch(Exception ex){
+            } catch (Exception ex) {
 
             }
 
@@ -601,43 +604,43 @@ public class RequestAction extends SuperActivity  implements
      * ASCII 转换成string
      * 4902014C56534846464143324546373632383437
      */
-    private  String asciiToString(String value)
-    {
+    private String asciiToString(String value) {
         StringBuffer sbu = new StringBuffer();
 
         byte[] arrByte = HexString2Bytes(value);
-        int iStart=0;//是否开始
+        int iStart = 0;//是否开始
         for (int i = 0; i < arrByte.length; i++) {
 
-            if(iStart>0){
-                sbu.append((char) Integer.parseInt(arrByte[i]+""));
-            }else{
-                if(Integer.parseInt(arrByte[i]+"")==1)
-                {
-                    iStart =1;
+            if (iStart > 0) {
+                sbu.append((char) Integer.parseInt(arrByte[i] + ""));
+            } else {
+                if (Integer.parseInt(arrByte[i] + "") == 1) {
+                    iStart = 1;
                 }
             }
 
         }
         return sbu.toString();
     }
+
     //把字符串转换成标准的16进制  例如 4C--->0x4c
-    public  byte uniteBytes(byte src0, byte src1) {
+    public byte uniteBytes(byte src0, byte src1) {
         byte _b0 = Byte.decode("0x" + new String(new byte[]{src0})).byteValue();
-        _b0 = (byte)(_b0 << 4);
+        _b0 = (byte) (_b0 << 4);
         byte _b1 = Byte.decode("0x" + new String(new byte[]{src1})).byteValue();
-        byte ret = (byte)(_b0 ^ _b1);
+        byte ret = (byte) (_b0 ^ _b1);
         return ret;
     }
+
     /*
      * 把16进制转换成byte
      */
-    public  byte[] HexString2Bytes(String src){
+    public byte[] HexString2Bytes(String src) {
         int iLength = src.length();
-        byte[] ret = new byte[iLength/2];
+        byte[] ret = new byte[iLength / 2];
         byte[] tmp = src.getBytes();
-        for(int i=0; i<iLength/2; i++){
-            ret[i] = uniteBytes(tmp[i*2], tmp[i*2+1]);
+        for (int i = 0; i < iLength / 2; i++) {
+            ret[i] = uniteBytes(tmp[i * 2], tmp[i * 2 + 1]);
         }
         return ret;
     }
@@ -650,6 +653,7 @@ public class RequestAction extends SuperActivity  implements
         Intent configIntent = new Intent(this, ConfigActivity.class);
         startActivity(configIntent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, START_LIVE_DATA, 0, "开始连接服务");
@@ -678,8 +682,7 @@ public class RequestAction extends SuperActivity  implements
     }
 
     private void startLiveData() {
-        try
-        {
+        try {
             Log.d(TAG, "开始读取实时数据..");
             if (!mServiceConnection.isRunning()) {
                 showToast("蓝牙服务没有运行!!!");
@@ -693,7 +696,7 @@ public class RequestAction extends SuperActivity  implements
             // screen won't turn off until wakeLock.release()
             wakeLock.acquire();
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             showToast("OBD读取数据异常……");
         }
 
@@ -719,7 +722,7 @@ public class RequestAction extends SuperActivity  implements
     }
 
     /**
-     *执行实时  读取OBD数据命令
+     * 执行实时  读取OBD数据命令
      */
     private Runnable mQueueCommands = new Runnable() {
         public void run() {
@@ -793,7 +796,7 @@ public class RequestAction extends SuperActivity  implements
         TableLayout tl = (TableLayout) findViewById(R.id.data_table);
         TableRow tr = new TableRow(this);
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN,TABLE_ROW_MARGIN);
+        params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN);
         tr.setLayoutParams(params);
         tr.setBackgroundColor(Color.BLACK);
         TextView name = new TextView(this);
