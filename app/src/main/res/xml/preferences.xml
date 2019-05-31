@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="OBD Preferences">
@@ -32,46 +32,60 @@
             android:dialogTitle="Bluetooth Devices" />
 
         <CheckBoxPreference
-            android:key="imperial_units_preference"
             android:defaultValue="false"
-            android:title="英制单位"
+            android:dialogTitle="Imperial Units"
+            android:key="imperial_units_preference"
             android:summaryOff="英制单位是否可用"
-            android:summaryOn="Go back to metric units" android:dialogTitle="Imperial Units"/>
+            android:summaryOn="Go back to metric units"
+            android:title="英制单位"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <CheckBoxPreference
-            android:key="enable_gps_preference"
             android:defaultValue="false"
-            android:title="GPS"
+            android:dialogTitle="GPS"
+            android:key="enable_gps_preference"
             android:summaryOff="打开GPS"
-            android:summaryOn="关闭GPS" android:dialogTitle="GPS"/>
+            android:summaryOn="关闭GPS"
+            android:title="GPS"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <EditTextPreference
-            android:key="update_period_preference"
             android:defaultValue="4"
-            android:title="更新周期（秒）"
+            android:dialogTitle="更新周期（秒）"
+            android:key="update_period_preference"
             android:summary="车辆之间传输数据时长（秒）"
-            android:dialogTitle="更新周期（秒）" />
+            android:title="更新周期（秒）"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <EditTextPreference
-            android:key="max_fuel_econ_preference"
             android:defaultValue="70"
-            android:title="最大燃油经济性值"
+            android:dialogTitle="最大燃油经济性值"
+            android:key="max_fuel_econ_preference"
             android:summary="任何燃料经济价值比这更大的将被抛出"
-            android:dialogTitle="最大燃油经济性值" />
+            android:title="最大燃油经济性值"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <EditTextPreference
-            android:key="volumetric_efficiency_preference"
             android:defaultValue=".85"
-            android:title="容积效率"
+            android:dialogTitle="容积效率 (例 0.85)"
+            android:key="volumetric_efficiency_preference"
             android:summary="用于燃油经济性车没有MAF传感器"
-            android:dialogTitle="容积效率 (例 0.85)" />
+            android:title="容积效率"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <EditTextPreference
-            android:key="engine_displacement_preference"
             android:defaultValue="1.6"
-            android:title="发动机排量 (升)"
+            android:dialogTitle="发动机排量 (升)"
+            android:key="engine_displacement_preference"
             android:summary="用于燃油经济性车没有MAF传感器"
-            android:dialogTitle="发动机排量 (升)" />
+            android:title="发动机排量 (升)"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <EditTextPreference
             android:key="reader_config_preference"
