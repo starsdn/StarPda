@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="OBD Preferences">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <PreferenceCategory android:title="OBD Preferences">
 
         <CheckBoxPreference
-            android:key="upload_data_preference"
             android:defaultValue="false"
-            android:title="数据上传"
+            android:dialogTitle="数据可以上传"
+            android:enabled="false"
+            android:key="upload_data_preference"
             android:summaryOff="不通过http上传数据"
-            android:summaryOn="通过http上传数据" android:dialogTitle="数据可以上传" android:enabled="false"/>
+            android:summaryOn="通过http上传数据"
+            android:title="数据上传" />
 
         <EditTextPreference
-            android:key="upload_url_preference"
             android:defaultValue="http://www.ral.ucar.edu/~lambi/obd/get_data.php"
-            android:title="上传URL"
+            android:dialogTitle="上传URL"
+            android:enabled="false"
+            android:key="upload_url_preference"
             android:summary="能够实时提交数据的URL"
-            android:dialogTitle="上传URL" android:enabled="false"/>
+            android:title="上传URL" />
 
         <EditTextPreference
-            android:key="vehicle_id_preference"
             android:defaultValue=""
-            android:title="车辆ID"
+            android:dialogTitle="Vehicle ID"
+            android:key="vehicle_id_preference"
             android:summary="数据上传标记的车辆唯一ID"
-            android:dialogTitle="Vehicle ID" />
+            android:title="车辆ID" />
 
         <ListPreference
+            android:dialogTitle="Bluetooth Devices"
             android:key="bluetooth_list_preference"
-            android:title="蓝牙设备"
             android:summary="蓝牙设备列表"
-            android:dialogTitle="Bluetooth Devices" />
+            android:title="蓝牙设备" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -88,19 +90,17 @@
             tools:visibility="gone" />
 
         <EditTextPreference
-            android:key="reader_config_preference"
             android:defaultValue="atsp0\natz"
-            android:title="读取配置命令"
+            android:dialogTitle="读取配置命令"
+            android:key="reader_config_preference"
             android:summary="命令配置蓝牙阅读器，与新的线分开"
-            android:dialogTitle="读取配置命令" />
+            android:title="读取配置命令" />
 
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="OBD Commands">
+    <PreferenceCategory android:title="OBD Commands">
         <PreferenceScreen
             android:key="obd_commands_screen"
-            android:title="OBD 命令"
-            android:summary="选择要实时查看的命令.">
-        </PreferenceScreen>
+            android:summary="选择要实时查看的命令."
+            android:title="OBD 命令"></PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>
